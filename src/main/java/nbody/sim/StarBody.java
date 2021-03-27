@@ -1,4 +1,4 @@
-package com.company;
+package nbody.sim;
 
 import javafx.scene.paint.Color;
 

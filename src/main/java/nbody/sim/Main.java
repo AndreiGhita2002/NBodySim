@@ -1,4 +1,4 @@
-package com.company;
+package nbody.sim;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
@@ -50,6 +50,15 @@ public class Main extends Application {
             }
         });
 
+        // closing the application
+        stage.setOnCloseRequest(event -> {
+            try {
+                stop();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
@@ -80,19 +89,20 @@ public class Main extends Application {
 
         for (Body body : sim.bodyList) {
             gc.setFill(body.color);
-            gc.fillOval(W / 2.0 + body.X / resolution - body.radius / 2.0,
-                        H / 2.0 + body.Y / resolution - body.radius / 2.0,
+            gc.fillOval(W / 2.0 + body.pos.X / resolution - body.radius / 2.0,
+                        H / 2.0 + body.pos.Y / resolution - body.radius / 2.0,
                     body.radius,
                     body.radius);
 
             gc.setFill(Color.LIGHTGRAY);
-            gc.fillText(body.printCoords(), W / 2.0 + body.X / resolution, H / 2.0 + body.Y / resolution);
+            gc.fillText(body.printCoords(), W / 2.0 + body.pos.X / resolution, H / 2.0 + body.pos.Y / resolution);
         }
     }
 
     public void simCycle() {
-        sim.update(cyclePeriod);
+        sim.doForces();
         sim.checkCollisions();
+        sim.update(cyclePeriod);
     }
 
     public void UI(GraphicsContext gc) {

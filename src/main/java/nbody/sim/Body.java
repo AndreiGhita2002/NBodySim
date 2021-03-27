@@ -1,4 +1,4 @@
-package com.company;
+package nbody.sim;
 
 import javafx.scene.paint.Color;
 
@@ -10,19 +10,20 @@ class Body {
     static Integer nextID = 0;
 
     Integer ID;
-    Double X;
-    Double Y;
+    Vector pos;
     Vector velocity;
     Vector force;
     Double mass;
     Double radius;
     Color color;
 
+    boolean collided;
+
     // using newtonian gravitation
     void addForce(Body otherBody) {
 
-        double distX = X - otherBody.X;
-        double distY = Y - otherBody.Y;
+        double distX = pos.X - otherBody.pos.X;
+        double distY = pos.Y - otherBody.pos.Y;
         double dist = Math.sqrt(distX * distX + distY * distY);
 
         if (dist == 0) return;
@@ -42,10 +43,11 @@ class Body {
         velocity.X += time * force.X / mass;
         velocity.Y += time * force.Y / mass;
 
-        X += time * velocity.X;
-        Y += time * velocity.Y;
+        pos.X += time * velocity.X;
+        pos.Y += time * velocity.Y;
 
         resetForce();
+        collided = false;
     }
 
     private void resetForce() {
@@ -54,8 +56,8 @@ class Body {
     }
 
     double getDistanceBetween(Body otherBody) {
-        double distX = X - otherBody.X;
-        double distY = Y - otherBody.Y;
+        double distX = pos.X - otherBody.pos.X;
+        double distY = pos.Y - otherBody.pos.Y;
         return Math.sqrt(distX * distX + distY * distY);
     }
 
@@ -66,8 +68,7 @@ class Body {
     }
 
     Body(Double initX, Double initY, Double massInKg, Color color) {
-        this.X = initX;
-        this.Y = initY;
+        pos = new Vector(initX, initY);
 //        this.mass = massInKg;
         this.mass = massInKg * testMass;
         this.color = color;
@@ -81,11 +82,11 @@ class Body {
     }
 
     public String toString() {
-        return "" + ID + ": " + X + ", " + Y + "; " + velocity.X + ", " + velocity.Y + "; " + mass + " kg";
+        return "" + ID + ": " + pos.X + ", " + pos.Y + "; " + velocity.X + ", " + velocity.Y + "; " + mass + " kg";
     }
 
     public String printCoords() {
-        return "" + Math.round(X) + ", " + Math.round(Y);
+        return "" + Math.round(pos.X) + ", " + Math.round(pos.Y);
 
     }
 }
