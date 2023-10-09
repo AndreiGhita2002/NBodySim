@@ -10,27 +10,27 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-public class Main extends Application {
+public class GUI extends Application {
 
     private static final int W = 1000;
     private static final int H = 1000;
     private static final int resolution = 2;    // metres per point
 
     private static Sim sim;
-
     private static Double cyclePeriod = 1.0;
+    private Boolean simShouldRun = false;
+    
+    GraphicsContext gc;
 
     @Override
     public void start(Stage stage) {
-
         //TODO add text prompt for number of bodies
-
         sim = new Sim(4, W * resolution, H * resolution);
 
         Group root = new Group();
         Scene scene = new Scene(root, W, H);
         Canvas canvas = new Canvas(W, H);
-        GraphicsContext gc = canvas.getGraphicsContext2D();
+        this.gc = canvas.getGraphicsContext2D();
 
         root.getChildren().add(canvas);
         stage.setScene(scene);
@@ -38,16 +38,17 @@ public class Main extends Application {
         render(gc);
         sim.printBodies();
 
-        scene.setOnKeyPressed(event -> {
-            switch (event.getCode()) {
-                case SPACE: loop(gc); break;
-            }
-        });
-
         scene.setOnKeyReleased(event -> {
             switch (event.getCode()) {
-                case COMMA:  cyclePeriod -= 0.1;  break;
-                case PERIOD: cyclePeriod += 0.1; break;
+                case COMMA -> {
+                    cyclePeriod -= 0.1;
+                    render(gc);
+                }
+                case PERIOD -> {
+                    cyclePeriod += 0.1;
+                    render(gc);
+                }
+                case SPACE -> simShouldRun = !simShouldRun;
             }
         });
 
@@ -63,16 +64,14 @@ public class Main extends Application {
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
-//                loop(gc);
-                UI(gc);
-                // TODO add wait(cyclePeriod)
+                loop(gc);
             }
         };
         timer.start();
     }
 
     public void loop(GraphicsContext gc) {
-        if (sim.shouldRun) {
+        if (simShouldRun) {
             simCycle();
         }
         render(gc);
@@ -96,7 +95,11 @@ public class Main extends Application {
                     body.radius);
 
             gc.setFill(Color.LIGHTGRAY);
-            gc.fillText(body.printCoords(), W / 2.0 + body.pos.X / resolution, H / 2.0 + body.pos.Y / resolution);
+            gc.fillText(
+                    body.printCoords(),
+                    W / 2.0 + body.pos.X / resolution,
+                    H / 2.0 + body.pos.Y / resolution
+            );
         }
     }
 
@@ -108,13 +111,12 @@ public class Main extends Application {
 
     public void UI(GraphicsContext gc) {
         gc.setFill(Color.LIGHTGRAY);
-        gc.setFont(Font.font("comic sans", 12));
         gc.fillText("Cycle: " + sim.simCycleNum, 10, 10);
         gc.fillText("Sim speed: " + cyclePeriod, 10, 30);
         //TODO add UI and stuff
     }
 
-    public static void main(String[] args) {
+    public static void app_main(String[] args) {
         launch(args);
     }
 }

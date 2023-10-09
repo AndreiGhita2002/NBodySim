@@ -12,7 +12,6 @@ class Sim {
 
     List<Body> bodyList = new ArrayList<>();
     Integer simCycleNum = 0;
-    Boolean shouldRun = true;
 
     // debugging options:
     Boolean printBoundariesExits = false;
