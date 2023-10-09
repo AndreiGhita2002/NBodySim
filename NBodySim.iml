@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
-  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_11">
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_19">
     <output url="file://$MODULE_DIR$/target/classes" />
     <output-test url="file://$MODULE_DIR$/target/test-classes" />
     <content url="file://$MODULE_DIR$">
@@ -12,15 +12,14 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" exported="" name="lib" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-controls:13.0.1" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-graphics:13.0.1" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-controls:mac:13.0.1" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-controls:win:13.0.1" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-base:mac:13.0.1" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-base:win:13.0.1" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-graphics:mac:13.0.1" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-base:13.0.1" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-graphics:win:13.0.1" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-controls:21" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-graphics:21" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-controls:mac:21" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-controls:win:21" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-base:mac:21" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-base:win:21" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-graphics:mac:21" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-base:21" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-graphics:win:21" level="project" />
   </component>
 </module>

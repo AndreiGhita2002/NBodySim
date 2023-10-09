@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class Main extends Application {
@@ -107,6 +108,7 @@ public class Main extends Application {
 
     public void UI(GraphicsContext gc) {
         gc.setFill(Color.LIGHTGRAY);
+        gc.setFont(Font.font("comic sans", 12));
         gc.fillText("Cycle: " + sim.simCycleNum, 10, 10);
         gc.fillText("Sim speed: " + cyclePeriod, 10, 30);
         //TODO add UI and stuff

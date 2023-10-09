@@ -64,9 +64,13 @@ class Sim {
 
             // checking for a collision with another body
             for (Body otherBody : bodyList) {
-                if (!body.equals(otherBody) && !body.collided && !otherBody.collided) {
+                if (body.equals(otherBody)) {
+                    continue;
+                }
+
+                if (!body.collided && !otherBody.collided) {
                     if (body.getDistanceBetween(otherBody) <= body.radius + otherBody.radius) {
-                        System.out.println("collision between " + body.ID + " and " + otherBody.ID);
+//                        System.out.println("collision between " + body.ID + " and " + otherBody.ID);
                         doCollision(body, otherBody);
                     }
                 }
