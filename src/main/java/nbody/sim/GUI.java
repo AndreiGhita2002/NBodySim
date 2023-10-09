@@ -35,18 +35,18 @@ public class GUI extends Application {
         root.getChildren().add(canvas);
         stage.setScene(scene);
         stage.show();
-        render(gc);
+        render();
         sim.printBodies();
 
         scene.setOnKeyReleased(event -> {
             switch (event.getCode()) {
                 case COMMA -> {
                     cyclePeriod -= 0.1;
-                    render(gc);
+                    render();
                 }
                 case PERIOD -> {
                     cyclePeriod += 0.1;
-                    render(gc);
+                    render();
                 }
                 case SPACE -> simShouldRun = !simShouldRun;
             }
@@ -64,21 +64,20 @@ public class GUI extends Application {
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
-                loop(gc);
+                loop();
             }
         };
         timer.start();
     }
 
-    public void loop(GraphicsContext gc) {
+    public void loop() {
         if (simShouldRun) {
             simCycle();
         }
-        render(gc);
-        UI(gc);
+        render();
     }
 
-    public void render(GraphicsContext gc) {
+    public void render() {
         gc.setFill(Color.BLACK);
         gc.fillRect(0, 0, W, H);
 
@@ -87,12 +86,15 @@ public class GUI extends Application {
         gc.fillRect(0, H / 2.0, W, 2);
         gc.fillRect(W / 2.0, 0, 2, H);
 
+        // drawing the bodies
         for (Body body : sim.bodyList) {
             gc.setFill(body.color);
-            gc.fillOval(W / 2.0 + body.pos.X / resolution - body.radius / 2.0,
-                        H / 2.0 + body.pos.Y / resolution - body.radius / 2.0,
+            gc.fillOval(
+                    W / 2.0 + body.pos.X / resolution - body.radius / 2.0,
+                    H / 2.0 + body.pos.Y / resolution - body.radius / 2.0,
                     body.radius,
-                    body.radius);
+                    body.radius
+            );
 
             gc.setFill(Color.LIGHTGRAY);
             gc.fillText(
@@ -101,19 +103,17 @@ public class GUI extends Application {
                     H / 2.0 + body.pos.Y / resolution
             );
         }
+        
+        // drawing the stats
+        gc.setFill(Color.LIGHTGRAY);
+        gc.fillText("Cycle: " + sim.simCycleNum, 10, 10);
+        gc.fillText("Sim speed: " + cyclePeriod, 10, 30);
     }
 
     public void simCycle() {
         sim.doForces();
         sim.checkCollisions();
         sim.update(cyclePeriod);
-    }
-
-    public void UI(GraphicsContext gc) {
-        gc.setFill(Color.LIGHTGRAY);
-        gc.fillText("Cycle: " + sim.simCycleNum, 10, 10);
-        gc.fillText("Sim speed: " + cyclePeriod, 10, 30);
-        //TODO add UI and stuff
     }
 
     public static void app_main(String[] args) {
